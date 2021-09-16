@@ -1,0 +1,23 @@
+Item Class: Atlas Region Upgrade Items
+Rarity: Magic
+Cataloguer's Platinum Haewark Hamlet Watchstone
+--------
+Item Level: 85
+--------
+Perandus Chests in Areas have 29% increased chance to be Catalogues
+--------
+Only the souls trapped within can bear witness to the Maven's dark proclivities, and they dare not speak up.
+--------
+Socket this into a Citadel on your Atlas to increase the Tier of Maps and reveal hidden Maps in that Citadel's Region. You can only socket one Crimson, Viridian, Cobalt or Golden Watchstone into each Citadel.
+
+
+Item Class: Stackable Currency
+Rarity: Currency
+Exalted Orb
+--------
+Stack Size: 12/10
+--------
+Augments a rare item with a new random modifier
+--------
+Right click this item then left click a rare item to apply it. Rare items can have up to six random modifiers.
+Shift click to unstack.
