@@ -2,8 +2,11 @@ import pyautogui
 import clipboard
 import keyboard
 from time import sleep
-from modules import clipboard_to_item, clipboard_to_item_adv
+from modules import clipboard_to_item, clipboard_to_item_advanced
+import numpy as np
 
+# mature
+# meticulous
 
 sleep_time = 0.15
 errors = 0
@@ -14,27 +17,14 @@ def copy_to_clipboard():
     return clipboard.paste()
 
 
-print("Type desired prefixes. If none or when done, press enter to continue.")
-print()
-prefixes = []
-x = input()
+target_prefixes = [{'name': 'mature', 'tier': 1, "description": 'NA'},
+                   {'name': 'meticulous', 'tier': 1, "description": 'NA'},
+                   {'name': 'emblematic', 'tier': 1, "description": 'NA'}]
+#target_prefixes = [{'name': "NA", 'tier': 10, "description": 'born of'}]
+#target_suffixes = [{'name': 'of many', 'tier': 1}]
+target_suffixes = []
 
-while x != "":
-    prefixes.append(x.lower())
-    x = input()
-
-print()
-print("Type desired prefixes. If none or when done, press enter to continue.")
-print()
-suffixes = []
-x = input()
-
-while x != "":
-    suffixes.append(x.lower())
-    x = input()
-
-print()
-print(f"I will look for prefixes: {prefixes} and suffixes: {suffixes}")
+print(f"I will look for target_prefixes: {target_prefixes} and target_suffixes: {target_suffixes}")
 print()
 
 print("Click your Path of Exile client")
@@ -124,18 +114,23 @@ while not item_hit:
         pyautogui.click(x=baseX, y=baseY)
         altN -= 1
 
+    sleep(np.random.random() / 2)
+
     just_augmented = False
-    prefix, suffix = clipboard_to_item_adv(copy_to_clipboard())
 
-    if prefix is not None and len(prefixes) != 0:
-        for p in prefixes:
-            if p in prefix:
-                item_hit = True
+    prefixes, suffixes = clipboard_to_item_advanced(copy_to_clipboard())
 
-    if suffix is not None and len(suffixes) != 0:
-        for s in suffixes:
-            if s in suffix:
-                item_hit = True
+    if len(prefixes) != 0 and len(target_prefixes) != 0:
+        for tp in target_prefixes:
+            for p in prefixes:
+                if (tp['name'] in p['name'] or tp['description'] in p['description']) and p['tier'] <= tp['tier']:
+                    item_hit = True
+
+    if len(suffixes) != 0 and len(target_suffixes) != 0:
+        for ts in target_suffixes:
+            for s in suffixes:
+                if (ts['name'] in s['name'] or ts['description'] in s['description']) and s['tier'] <= ts['tier']:
+                    item_hit = True
 
     if altN <= 0:
         print('out of alts')
@@ -147,12 +142,12 @@ while not item_hit:
         print()
         break
 
-    if prefix is None and len(prefixes) != 0:
+    if len(prefixes) == 0 and len(target_prefixes) != 0:
         augment()
         augN -= 1
         just_augmented = True
 
-    if suffix is None and len(suffixes) != 0:
+    if len(suffixes) == 0 and len(target_suffixes) != 0:
         augment()
         augN -= 1
         just_augmented = True

@@ -56,20 +56,28 @@ def clipboard_to_item(cb):
     return item_name, item_stack
 
 
-def clipboard_to_item_adv(cb):
+def clipboard_to_item_advanced(cb):
     if cb[:11] != "Item Class:":
         return None, None
 
     cb_list = cb.split("\r\n")
 
-    prefix, suffix = None, None
+    prefixes, suffixes = [], []
 
     for s in cb_list:
         if "Prefix Modifier" in s:
-            prefix = s.split('\"')[1].lower()
+            prefixes.append({
+                "name": s.split('\"')[1].lower(),
+                "tier": int(s.split('(Tier: ')[1][0]),
+                "description": s.split('\n')[1].lower()
+            })
         elif "Suffix Modifier" in s:
-            suffix = s.split('\"')[1].lower()
+            suffixes.append({
+                "name": s.split('\"')[1].lower(),
+                "tier": int(s.split('(Tier: ')[1][0]),
+                "description": s.split('\n')[1].lower()
+            })
 
-    return prefix, suffix
+    return prefixes, suffixes
 
 
